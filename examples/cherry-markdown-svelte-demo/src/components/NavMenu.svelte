@@ -150,13 +150,15 @@
 .title {
     color: #454545;
     text-decoration: none;
+    width: 100%;
+    font-size: 19px;
     font-weight: bold;
     display: block;
     padding: 0.5rem;
 }
 
 .option {
-    font-size: 17px;
+    font-size: 18px;
     color: #454545;
     text-decoration: none;
     font-weight: 350;

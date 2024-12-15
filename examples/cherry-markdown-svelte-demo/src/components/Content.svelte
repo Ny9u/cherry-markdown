@@ -1,7 +1,7 @@
 <script>
 import 'cherry-markdown/dist/cherry-markdown.css';
 import Cherry from 'cherry-markdown';
-import { onMount } from 'svelte';
+import { onDestroy, onMount } from 'svelte';
 import { groupIdx, apiIdx } from './index';
 
 function getFullCode (code) { return `\`\`\`javascript
@@ -394,17 +394,17 @@ ${getFullCode(`cherryObj.toolbar.toolbarHandlers.graph(1)
 ]
 let cherryObj;
 let divRef;
-let isDestroy = false;
+let showOverlay = false;
+let width;
+let height;
+let left;
+let top;
+let positionObserver;
 
 let code = data[$groupIdx].api[$apiIdx].code;
 
 function handleReset(){
-    if(!data[$groupIdx].api[$apiIdx]||data[$groupIdx].api[$apiIdx].name === "destroy"){
-        isDestroy = true;
-        alert("请刷新页面以重新生成编辑器!");
-        return;
-    }
-    else if(data[$groupIdx].api[$apiIdx].name === "resetToolbar"){
+    if(data[$groupIdx].api[$apiIdx].name === "resetToolbar"){
         alert("请刷新页面以恢复工具栏配置!");
         return;
     }
@@ -414,21 +414,25 @@ function handleReset(){
 function reset() {
     if(!data[$groupIdx].api[$apiIdx]) {
         alert("编辑器加载失败,请刷新页面!");
-    }
-    if(isDestroy){
-        alert("请刷新页面以重新生成编辑器!");
-        isDestroy = false;
+        return;
     }
     const textarea = document.querySelector('textarea');
     textarea.value = data[$groupIdx].api[$apiIdx].code;
     code = data[$groupIdx].api[$apiIdx].code;
     cherryObj.setMarkdown(data[$groupIdx].api[$apiIdx].markdown); 
+    showOverlay = false;
 }
 
 function runCode() {
     try {
         if(code==='') {
             alert("请输入代码!");
+            return;
+        }
+        // 销毁逻辑处理
+        if(code==='cherryObj.destroy();'){
+            updateOverlay();
+            showOverlay = true;
             return;
         }
         eval(code);
@@ -441,6 +445,17 @@ function handleChange(e) {
     code = e.target.value;
 }
 
+function updateOverlay() {
+    if (showOverlay) {
+        const cherry = document.getElementsByClassName('cherry clearfix')[0];
+        width = cherry.getBoundingClientRect().width
+        height = cherry  .getBoundingClientRect().height 
+        left = cherry.getBoundingClientRect().left 
+        top = cherry.getBoundingClientRect().top
+    }
+}
+
+
 onMount(() => {
     if (divRef) {
         cherryObj = new Cherry({
@@ -449,14 +464,25 @@ onMount(() => {
         });
     }
     groupIdx.subscribe(reset);
-    apiIdx.subscribe(reset);
+    apiIdx.subscribe(reset); 
+    positionObserver = setInterval(() => {
+        const rect = divRef.getBoundingClientRect();
+        left= rect.left;
+        top= rect.top;
+        width = rect.width;
+        height = rect.height;
+    }, 25); 
+});
+
+onDestroy(() => {
+    clearInterval(positionObserver);
 });
 
 </script>
 
 <div class="content">
     <div class="container">
-        <!-- <h1>{data[$groupIdx].api[$apiIdx].name}</h1>  -->
+        <h1>{data[$groupIdx].api[$apiIdx].name}</h1> 
         <h2>{data[$groupIdx].api[$apiIdx].title}</h2>
         <h3>描述</h3>
         <div>{data[$groupIdx].api[$apiIdx].desc}</div>
@@ -477,7 +503,10 @@ onMount(() => {
             <button class="btn" on:click={handleReset}>重置</button>
             {/if}
         </div>     
-        <div bind:this={divRef}  id='cherry-markdown' style="width:100%; height:550px;"/>
+        {#if showOverlay}
+            <div class="overlay" style={`top: ${top}px; left: ${left}px; width: ${width}px; height: ${height}px;`}></div>
+        {/if}
+        <div bind:this={divRef}  id='cherry-markdown' style="width:100%; height:950px;"/>
     </div>
 </div> 
 
@@ -487,13 +516,18 @@ onMount(() => {
     .content {
         padding: 1rem;
         height: auto;
-        width: 80%;
+        width: inherit;
         overflow-y: auto;
         scrollbar-width: none;
     }
     
     .container {
         margin-left: 3rem;
+    } 
+
+    .container h1{
+        font-size: 3rem;
+        font-weight: bold;
     } 
 
     .container h2{
@@ -515,7 +549,13 @@ onMount(() => {
         font-size: 16px;
         border: none;
     }
-
+    
+    .overlay {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0);
+        z-index: 9999;
+    }
+    
     .code-editor {
         display: block;
         height: 180px;
