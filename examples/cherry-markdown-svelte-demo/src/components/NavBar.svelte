@@ -17,7 +17,7 @@
 <style>
 .navbar-wrapper {
   height: 80px;
-  width: 1241px;
+  width: 100%;
   border-bottom: 2px solid #e26862;
   display: flex;
   flex-direction: row;

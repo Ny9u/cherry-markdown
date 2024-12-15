@@ -477,7 +477,7 @@ onMount(() => {
             <button class="btn" on:click={handleReset}>重置</button>
             {/if}
         </div>     
-        <div bind:this={divRef}  id='cherry-markdown' style="width:850px; height:550px;"/>
+        <div bind:this={divRef}  id='cherry-markdown' style="width:100%; height:550px;"/>
     </div>
 </div> 
 
@@ -486,15 +486,13 @@ onMount(() => {
 
     .content {
         padding: 1rem;
-        height: 580px;
-        max-height: 580px;
+        height: auto;
         width: 80%;
         overflow-y: auto;
         scrollbar-width: none;
     }
     
     .container {
-        width: 850px;
         margin-left: 3rem;
     } 
 
@@ -505,7 +503,7 @@ onMount(() => {
 
     .button {  
         display: block;
-        margin-left: 30rem;
+        margin-left: 75%;
     }
 
     .btn {
@@ -521,7 +519,7 @@ onMount(() => {
     .code-editor {
         display: block;
         height: 180px;
-        width: 845px;
+        width: 100%;
         font-size: medium;
         font-family:'Arial Narrow Bold';
         background-color:  #f8eeed;

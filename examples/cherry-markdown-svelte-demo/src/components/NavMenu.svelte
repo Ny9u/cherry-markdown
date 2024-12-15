@@ -77,7 +77,7 @@
             ]
         },
         {
-            title: 'Cherry.toolbar.toolbarHandl ers API',
+            title: 'Cherry.toolbar.toolbarHandlers API',
             groupIdx:3,
             children: [
                 {
@@ -136,9 +136,8 @@
 .navmenu {
     background-color: #f8eeed;
     padding: 0 1rem;
-    width: 20%;
-    height: 620px;
-    max-height: 620px; 
+    width: auto;
+    height: auto;
     overflow-y: auto; 
     overflow-x: hidden;
     scrollbar-width: none; 

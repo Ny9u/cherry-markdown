@@ -16,7 +16,7 @@
 
 <style>
 .container {
-  max-width: 1241px;
+  width: 100%;
   display: flex;
   flex-direction: row;
 }
