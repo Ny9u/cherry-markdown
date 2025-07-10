@@ -50436,18 +50436,18 @@
 	      var setext = {
 	        begin: '(?:^|\\n)(\\n*)',
 	        // (?<lines>\\n*)
-	        content: ['(?:\\h*', '(.+)',
+	        content: ['(?:\\h*', '(.[^=\\-]*[\\n]*.[^=\\-]*)',
 	        // (?<text>.+)
 	        ')\\n', '(?:\\h*', '([=]+|[-]+)',
 	        // (?<level>[=]+|[-]+)
 	        ')'].join(''),
-	        end: '(?=$|\\n)'
+	        end: '(?=$|\\n*)'
 	      };
 	      setext.reg = compileRegExp(setext, 'g', true);
 
 	      // atx header
 	      var atx = {
-	        begin: '(?:^|\\n)(\\n*)(?:\\h*(#{1,6}))',
+	        begin: '(?:^|\\n)(\\n*)(?:\\h{0,3}(#{1,6})\\h{1,}(?![#]))',
 	        // (?<lines>\\n*), (?<level>#{1,6})
 	        content: '(.+?)',
 	        // '(?<text>.+?)'
@@ -51005,7 +51005,7 @@
 	        // 计算签名，签名可能会重复，符合预期
 	        var sign = "hr".concat(lineCount);
 	        var placeHolder = _this.pushCache(concat$1(_context = "<hr data-sign=\"".concat(sign, "\" data-lines=\"")).call(_context, lineCount, "\" />"), sign);
-	        return prependLineFeedForParagraph(match, placeHolder);
+	        return prependLineFeedForParagraph(match, placeHolder, true);
 	      });
 	    }
 	  }, {
@@ -91736,7 +91736,7 @@
 	  forEach$5(nodeIgnorePlugin).call(nodeIgnorePlugin, function (key) {
 	  });
 	}
-	var VERSION = "0.9.4-0c293747";
+	var VERSION = "0.9.4-26664e16";
 	var CherryStatic = /*#__PURE__*/function () {
 	  // for type check only
 	  // TODO: fix this error
