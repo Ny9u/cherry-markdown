@@ -1,7 +1,8 @@
 export default class Table extends ParagraphBase {
-    constructor({ externals, config }: {
+    constructor({ externals, config, cherry }: {
         externals: any;
         config: any;
+        cherry: any;
     });
     chartRenderEngine: any;
     selfClosing: any;
@@ -10,6 +11,7 @@ export default class Table extends ParagraphBase {
         type: any;
         options: any;
     };
+    $parseProps(str: any): any;
     $parseColumnAlignRules(row: any): {
         textAlignRules: any;
         COLUMN_ALIGN_MAP: {
@@ -18,7 +20,7 @@ export default class Table extends ParagraphBase {
             C: string;
         };
     };
-    $parseTable(lines: any, sentenceMakeFunc: any, dataLines: any): {
+    $parseTable(lines: any, sentenceMakeFunc: any, dataLines: any, originalStr?: string): {
         html: string;
         sign: string;
     };
@@ -32,6 +34,7 @@ export default class Table extends ParagraphBase {
         html: string;
         sign: string;
     };
+    makeHtml(str: any, sentenceMakeFunc: any): any;
     test(str: any, flavor: any): any;
     /**
      * TODO: fix type errors

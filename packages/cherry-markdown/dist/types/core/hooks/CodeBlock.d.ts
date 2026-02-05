@@ -1,13 +1,14 @@
 export default class CodeBlock extends ParagraphBase {
     static inlineCodeCache: {};
-    constructor({ externals, config }: {
+    constructor({ externals, config, cherry }: {
         externals: any;
         config: any;
+        cherry: any;
     });
     codeCache: {};
     codeCacheList: any[];
     customLang: any[];
-    customParser: any;
+    customParser: {};
     lineNumber: any;
     copyCode: any;
     expandCode: any;
@@ -20,6 +21,10 @@ export default class CodeBlock extends ParagraphBase {
     customHighlighter: any;
     failedCleanCacheTimes: number;
     codeTimer: NodeJS.Timeout;
+    $cherry: any;
+    needCleanFlowCursor: any;
+    showInlineColor: any;
+    afterMakeHtml(html: any): any;
     $resetCache(): void;
     $codeReplace($codeSrc: any, $lang: any, sign: any, lines: any): any;
     $codeCache(sign: any, str: any): any;
@@ -61,6 +66,7 @@ export default class CodeBlock extends ParagraphBase {
      * @param {number} lines
      */
     renderCodeBlock($code: string, $lang: string, sign: string, lines: number): string;
+    customWrapperRender(lang: any, code: any, html: any): any;
     /**
      * 获取缩进代码块语法的正则
      * 缩进代码块必须要以连续两个以上的换行符开头
@@ -80,7 +86,13 @@ export default class CodeBlock extends ParagraphBase {
     $recoverCodeInIndent(str: any): any;
     $dealUnclosingCode(str: any): any;
     beforeMakeHtml(str: any, sentenceMakeFunc: any, markdownParams: any): any;
-    makeInlineCode(str: any): any;
+    /**
+     * 格式化语言，如果配置了自定义语言“all”，则无脑替换成“all”
+     * @param {string} lang 语言
+     * @returns {string} 格式化后的语言
+     */
+    formatLang(lang: string): string;
+    makeInlineCode(str: any, needAutoClose?: boolean): any;
     makeHtml(str: any): any;
     $replaceSpecialChar(str: any): any;
     rule(): {
@@ -89,6 +101,5 @@ export default class CodeBlock extends ParagraphBase {
         end: string;
         reg: RegExp;
     };
-    mounted(dom: any): void;
 }
 import ParagraphBase from "@/core/ParagraphBase";

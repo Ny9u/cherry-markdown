@@ -10,6 +10,7 @@ declare namespace imgSizeHandler {
         left: number;
         x: number;
         y: number;
+        alignment: string;
     };
     function getImgPosition(): {
         bottom: number;
@@ -20,6 +21,7 @@ declare namespace imgSizeHandler {
         left: number;
         x: number;
         y: number;
+        alignment: string;
     };
     function initBubbleButtons(): {
         points: {
@@ -67,7 +69,6 @@ declare namespace imgSizeHandler {
                 };
             };
         };
-        imgSrc: any;
         style: {
             width: any;
             height: any;
@@ -86,6 +87,7 @@ declare namespace imgSizeHandler {
             left: number;
             x: number;
             y: number;
+            alignment: string;
         };
     };
     function initBubbleButtons(): {
@@ -134,7 +136,6 @@ declare namespace imgSizeHandler {
                 };
             };
         };
-        imgSrc: any;
         style: {
             width: any;
             height: any;
@@ -153,6 +154,7 @@ declare namespace imgSizeHandler {
             left: number;
             x: number;
             y: number;
+            alignment: string;
         };
     };
     function showBubble(img: any, container: any, previewerDom: any): void;

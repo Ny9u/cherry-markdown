@@ -42,15 +42,16 @@ export default class PreviewerBubble {
     /**
      * 判断是否为代码块
      * @param {HTMLElement} element
-     * @returns {boolean|HTMLElement}
+     * @returns {boolean|Element}
      */
-    isCherryCodeBlock(element: HTMLElement): boolean | HTMLElement;
+    isCherryCodeBlock(element: HTMLElement): boolean | Element;
     /**
      * 是否为由cherry生成的表格，且不是简单表格
+     * 现在也支持 HTML 表格语法
      * @param {HTMLElement} element
-     * @returns {boolean}
+     * @returns {boolean|HTMLElement}
      */
-    isCherryTable(element: HTMLElement): boolean;
+    isCherryTable(element: HTMLElement): boolean | HTMLElement;
     /**
      * 是否开启了预览区操作 && 是否有编辑区
      * @returns {boolean}
@@ -74,6 +75,22 @@ export default class PreviewerBubble {
      */
     $removeAllPreviewerBubbles(trigger?: string): void;
     /**
+     * 检查并重新创建表格处理器
+     * 当表格结构发生变化时，需要重新创建处理器以避免位置异常
+     */
+    $checkAndRecreateTableHandlers(): void;
+    /**
+     * 检查表格处理器是否仍然有效
+     * @param {TableHandler} handler 表格处理器实例
+     * @returns {boolean} 是否有效
+     */
+    $isTableHandlerValid(handler: TableHandler): boolean;
+    /**
+     * 移除指定的预览气泡
+     * @param {string} trigger 触发方式
+     */
+    $removePreviewerBubble(trigger: string): void;
+    /**
      * hover到脚注的数字角标时展示悬浮卡片
      * @param {string} trigger 触发方式
      * @param {HTMLElement} htmlElement 触发的角标
@@ -91,7 +108,7 @@ export default class PreviewerBubble {
      * 为选中的图片增加操作工具栏
      * @param {HTMLImageElement} htmlElement 用户点击的图片dom
      */
-    $showImgPreviewerBubbles(htmlElement: HTMLImageElement): {
+    $showImgPreviewerBubbles(htmlElement: HTMLImageElement, event: any): {
         emit: () => void;
     };
     totalImgs: number;
@@ -124,13 +141,34 @@ export default class PreviewerBubble {
      * @returns {boolean}
      */
     beginChangeImgValue(htmlElement: any): boolean;
-    imgAppend: string | boolean;
+    imgDeco: any;
+    imgAlign: string;
+    imgSize: string;
     /**
      * 修改图片尺寸时的回调
      * @param {HTMLElement} htmlElement 被拖拽的图片标签
-     * @param {Object} style 图片的属性（宽高、对齐方式）
+     * @param {Object} style 图片的属性（宽高）
      */
-    changeImgValue(htmlElement: HTMLElement, style: any): void;
+    changeImgSize(htmlElement: HTMLElement, style: any): void;
+    /**
+     * 修改图片样式时的回调
+     * @param {HTMLElement} htmlElement 被修改演示的图片标签
+     * @param {Object} type 图片的属性（边框、阴影、圆角、对齐方式）
+     */
+    changeImgStyle(htmlElement: HTMLElement, type: any): void;
+    /**
+     * 修改图片装饰样式
+     * @param {HTMLElement} htmlElement 被修改演示的图片标签
+     * @param {Object} type 图片的属性（边框、阴影、圆角）
+     */
+    changeImgDecorationStyle(htmlElement: HTMLElement, type: any): void;
+    /**
+     * 修改图片装饰样式
+     * @param {HTMLElement} htmlElement 被修改演示的图片标签
+     * @param {Object} type 图片的属性（左对齐、居中、右对齐、左浮动、右浮动）
+     */
+    changeImgAlignmentStyle(htmlElement: HTMLElement, type: any): void;
+    changeImgValue(): void;
     /**
      * 预览区域编辑器的容器
      * @param {string} trigger 触发方式
@@ -140,3 +178,4 @@ export default class PreviewerBubble {
     $showBorderBubbles(): void;
     $showBtnBubbles(): void;
 }
+import TableHandler from "@/utils/tableContentHandler";

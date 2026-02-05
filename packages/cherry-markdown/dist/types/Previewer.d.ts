@@ -7,9 +7,9 @@
 export default class Previewer {
     /**
      *
-     * @param {Partial<import('../../types/previewer').PreviewerOptions>} options 预览区域设置
+     * @param {Partial<import('~types/previewer').PreviewerOptions>} options 预览区域设置
      */
-    constructor(options: Partial<import('../../types/previewer').PreviewerOptions>);
+    constructor(options: Partial<import('~types/previewer').PreviewerOptions>);
     /**
      * @property
      * @private
@@ -30,9 +30,9 @@ export default class Previewer {
     public isMobilePreview: boolean;
     /**
      * @property
-     * @type {import('../../types/previewer').PreviewerOptions}
+     * @type {import('~types/previewer').PreviewerOptions}
      */
-    options: import('../../types/previewer').PreviewerOptions;
+    options: import('~types/previewer').PreviewerOptions;
     $cherry: import("./Cherry").default;
     instanceId: string;
     /**
@@ -106,7 +106,7 @@ export default class Previewer {
     update(html: any): void;
     $dealEditAndPreviewOnly(isEditOnly?: boolean): void;
     previewOnly(): void;
-    editOnly(dealToolbar?: boolean): void;
+    editOnly(): void;
     floatPreviewer(): void;
     recoverFloatPreviewer(): void;
     recoverPreviewer(dealToolbar?: boolean): void;
@@ -162,11 +162,12 @@ export default class Previewer {
     /**
      * 导出预览区域内容
      * @public
-     * @param {'pdf' | 'img' | 'screenShot' | 'markdown' | 'html'} [type='pdf']
-     * 'pdf'：导出成pdf文件; 'img' | screenShot：导出成png图片; 'markdown'：导出成markdown文件; 'html'：导出成html文件;
+     * @param {'pdf' | 'img' | 'screenShot' | 'markdown' | 'html' | 'word'} [type='pdf']
+     * 'pdf'：导出成pdf文件; 'img' | screenShot：导出成png图片; 'markdown'：导出成markdown文件; 'html'：导出成html文件; 'word'：导出到Word（复制到剪贴板）;
      * @param {string} [fileName] 导出文件名
      */
-    public export(type?: 'pdf' | 'img' | 'screenShot' | 'markdown' | 'html', fileName?: string): void;
+    public export(type?: 'pdf' | 'img' | 'screenShot' | 'markdown' | 'html' | 'word', fileName?: string): void;
+    changePreviewToMobile(isMobile?: boolean): void;
 }
 import LazyLoadImg from "@/utils/lazyLoadImg";
 import PreviewerBubble from "./toolbars/PreviewerBubble";

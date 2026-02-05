@@ -1,4 +1,4 @@
-/** @typedef {import('../../types/cherry').CherryOptions} CherryOptions */
+/** @typedef {import('~types/cherry').CherryOptions} CherryOptions */
 export default class Cherry extends CherryStatic {
     /**
      * @protected
@@ -23,7 +23,11 @@ export default class Cherry extends CherryStatic {
      * @property
      * @type {CherryOptions}
      */
-    options: Partial<import("../../types/cherry")._CherryOptions<import("../../types/cherry").CherryCustomOptions>>;
+    options: Partial<import("~types/cherry")._CherryOptions<import("~types/cherry").CherryCustomOptions>>;
+    /** @type {import('./utils/cm-search-replace').default} SearchBox 实例 */
+    searchBoxInstance: import('./utils/cm-search-replace').default;
+    /** @type {boolean} 是否初始化SearchBox */
+    searchBoxInit: boolean;
     storageFloatPreviewerWrapData: {
         x: number;
         y: number;
@@ -65,6 +69,16 @@ export default class Cherry extends CherryStatic {
             table: string;
             'line-table': string;
             'bar-table': string;
+            'radar-table': string;
+            'map-table': string;
+            lineTable: string;
+            barTable: string;
+            radarTable: string;
+            mapTable: string;
+            heatmapTable: string;
+            sankeyTable: string;
+            pieTable: string;
+            proTable: string;
             formula: string;
             insertFormula: string;
             insertFlow: string;
@@ -72,6 +86,7 @@ export default class Cherry extends CherryStatic {
             insertState: string;
             insertClass: string;
             insertPie: string;
+            scatterTable: string;
             insertGantt: string;
             checklist: string;
             ol: string;
@@ -99,12 +114,13 @@ export default class Cherry extends CherryStatic {
             exportScreenshot: string;
             exportMarkdownFile: string;
             exportHTMLFile: string;
+            exportWordFile: string;
             theme: string;
             panel: string;
             detail: string;
-            'H1 Heading': string;
-            'H2 Heading': string;
-            'H3 Heading': string;
+            heading1: string;
+            heading2: string;
+            heading3: string;
             complement: string;
             summary: string;
             justify: string;
@@ -116,9 +132,14 @@ export default class Cherry extends CherryStatic {
             alignCenter: string;
             alignRight: string;
             alignJustify: string;
+            alignFloatLeft: string;
+            alignFloatRight: string;
             publish: string;
-            fontColor: string;
-            fontBgColor: string;
+            colorPickerText: string;
+            colorPickerBackground: string;
+            colorPickerClear: string;
+            colorPickerRecentColors: string;
+            colorPickerPresetColors: string;
             small: string;
             medium: string;
             large: string;
@@ -126,8 +147,13 @@ export default class Cherry extends CherryStatic {
             detailDefaultContent: string;
             inlineCode: string;
             codeBlock: string;
+            inlineMath: string;
+            mathBlock: string;
             shortcutKeySetting: string;
             editShortcutKeyConfigTip: string;
+            editingShortcutKeyConfigTip: string;
+            staticShortcutTip: string;
+            disabledShortcutTip: string;
             wordCount: string;
             wordCountP: string;
             wordCountW: string;
@@ -159,10 +185,48 @@ export default class Cherry extends CherryStatic {
             shortcutStatic18: string;
             leftMouseButton: string;
             disableShortcut: string;
+            enableShortcut: string;
             recoverShortcut: string;
             search: string;
             autoWrap: string;
             footnoteTitle: string;
+            searchFor: string;
+            replaceWith: string;
+            previousMatch: string;
+            nextMatch: string;
+            replace: string;
+            replaceAll: string;
+            regExpSearch: string;
+            caseSensitiveSearch: string;
+            wholeWordSearch: string;
+            matchesFoundText: string;
+            toggleReplace: string;
+            close: string;
+            border: string;
+            shadow: string;
+            radius: string;
+            customShortcut: string;
+            staticShortcut: string;
+            edit: string;
+            save: string;
+            cancel: string;
+            saveAsImage: string;
+            mapChartLoading: string;
+            mapChartLoadingTip: string;
+            mapChartError: string;
+            mapChartErrorTip: string;
+            mapChartRetry: string;
+            chartRenderError: string;
+            chartLibraryNotLoadedTip: string;
+            radarData: string;
+            scatterData: string;
+            pieData: string;
+            heatmapData: string;
+            mapData: string;
+            maxValue: string;
+            minValue: string;
+            high: string;
+            low: string;
         };
         en_US: {
             bold: string;
@@ -198,6 +262,16 @@ export default class Cherry extends CherryStatic {
             table: string;
             'line-table': string;
             'bar-table': string;
+            'radar-table': string;
+            'map-table': string;
+            lineTable: string;
+            barTable: string;
+            radarTable: string;
+            mapTable: string;
+            heatmapTable: string;
+            sankeyTable: string;
+            pieTable: string;
+            proTable: string;
             formula: string;
             insertFormula: string;
             insertFlow: string;
@@ -205,7 +279,10 @@ export default class Cherry extends CherryStatic {
             insertState: string;
             insertClass: string;
             insertPie: string;
-            insertGantt: string;
+            scatterTable: string;
+            insertGantt: string; /**
+             * @protected
+             */
             checklist: string;
             ol: string;
             ul: string;
@@ -231,9 +308,12 @@ export default class Cherry extends CherryStatic {
             exportScreenshot: string;
             exportMarkdownFile: string;
             exportHTMLFile: string;
-            'H1 Heading': string;
-            'H2 Heading': string;
-            'H3 Heading': string;
+            exportWordFile: string;
+            heading1: string;
+            heading2: string;
+            heading3: string;
+            panel: string;
+            detail: string;
             complement: string;
             summary: string;
             justify: string;
@@ -245,9 +325,14 @@ export default class Cherry extends CherryStatic {
             alignCenter: string;
             alignRight: string;
             alignJustify: string;
+            alignFloatLeft: string;
+            alignFloatRight: string;
             publish: string;
-            fontColor: string;
-            fontBgColor: string;
+            colorPickerText: string;
+            colorPickerBackground: string;
+            colorPickerClear: string;
+            colorPickerRecentColors: string;
+            colorPickerPresetColors: string;
             small: string;
             medium: string;
             large: string;
@@ -255,8 +340,13 @@ export default class Cherry extends CherryStatic {
             detailDefaultContent: string;
             inlineCode: string;
             codeBlock: string;
+            inlineMath: string;
+            mathBlock: string;
             shortcutKeySetting: string;
             editShortcutKeyConfigTip: string;
+            editingShortcutKeyConfigTip: string;
+            staticShortcutTip: string;
+            disabledShortcutTip: string;
             wordCount: string;
             wordCountP: string;
             wordCountW: string;
@@ -269,10 +359,7 @@ export default class Cherry extends CherryStatic {
             moveCol: string;
             shortcutStaticTitle: string;
             shortcutStatic1: string;
-            shortcutStatic2: string; /**
-             * @property
-             * @type {string} 实例ID
-             */
+            shortcutStatic2: string;
             shortcutStatic3: string;
             shortcutStatic4: string;
             shortcutStatic5: string;
@@ -291,10 +378,48 @@ export default class Cherry extends CherryStatic {
             shortcutStatic18: string;
             leftMouseButton: string;
             disableShortcut: string;
+            enableShortcut: string;
             recoverShortcut: string;
             search: string;
             autoWrap: string;
             footnoteTitle: string;
+            searchFor: string;
+            replaceWith: string;
+            previousMatch: string;
+            nextMatch: string;
+            replace: string;
+            replaceAll: string;
+            regExpSearch: string;
+            caseSensitiveSearch: string;
+            wholeWordSearch: string;
+            matchesFoundText: string;
+            toggleReplace: string;
+            close: string;
+            border: string;
+            shadow: string;
+            radius: string;
+            customShortcut: string;
+            staticShortcut: string;
+            edit: string;
+            save: string;
+            cancel: string;
+            saveAsImage: string;
+            mapChartLoading: string;
+            mapChartLoadingTip: string;
+            mapChartError: string;
+            mapChartErrorTip: string;
+            mapChartRetry: string;
+            chartRenderError: string;
+            chartLibraryNotLoadedTip: string;
+            radarData: string;
+            scatterData: string;
+            pieData: string;
+            heatmapData: string;
+            mapData: string;
+            maxValue: string;
+            minValue: string;
+            high: string;
+            low: string;
         };
         ru_RU: {
             bold: string;
@@ -330,6 +455,16 @@ export default class Cherry extends CherryStatic {
             table: string;
             'line-table': string;
             'bar-table': string;
+            'radar-table': string;
+            'map-table': string;
+            lineTable: string;
+            barTable: string;
+            radarTable: string;
+            mapTable: string;
+            heatmapTable: string;
+            sankeyTable: string;
+            pieTable: string;
+            proTable: string;
             formula: string;
             insertFormula: string;
             insertFlow: string;
@@ -337,22 +472,18 @@ export default class Cherry extends CherryStatic {
             insertState: string;
             insertClass: string;
             insertPie: string;
+            scatterTable: string;
             insertGantt: string;
             checklist: string;
             ol: string;
             ul: string;
             undo: string;
             redo: string;
-            previewClose: string; /**
-             * @protected
-             */
+            previewClose: string;
             codeTheme: string;
             switchModel: string;
             switchPreview: string;
             switchEdit: string;
-            /**
-             * @param {CherryOptions} options
-             */
             classicBr: string;
             normalBr: string;
             settings: string;
@@ -368,9 +499,12 @@ export default class Cherry extends CherryStatic {
             exportScreenshot: string;
             exportMarkdownFile: string;
             exportHTMLFile: string;
-            'H1 \u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A': string;
-            'H2 \u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A': string;
-            'H3 \u0417\u0430\u0433\u043E\u043B\u043E\u0432\u043E\u043A': string;
+            exportWordFile: string;
+            panel: string;
+            detail: string;
+            heading1: string;
+            heading2: string;
+            heading3: string;
             complement: string;
             summary: string;
             justify: string;
@@ -382,18 +516,31 @@ export default class Cherry extends CherryStatic {
             alignCenter: string;
             alignRight: string;
             alignJustify: string;
+            alignFloatLeft: string;
+            alignFloatRight: string;
             publish: string;
-            fontColor: string;
-            fontBgColor: string;
+            colorPickerText: string;
+            colorPickerBackground: string;
+            colorPickerClear: string;
+            colorPickerRecentColors: string;
+            colorPickerPresetColors: string;
             small: string;
             medium: string;
-            large: string;
+            large: string; /**
+             * @property
+             * @type {string} 实例ID
+             */
             superLarge: string;
             detailDefaultContent: string;
             inlineCode: string;
             codeBlock: string;
+            inlineMath: string;
+            mathBlock: string;
             shortcutKeySetting: string;
             editShortcutKeyConfigTip: string;
+            editingShortcutKeyConfigTip: string;
+            staticShortcutTip: string;
+            disabledShortcutTip: string;
             wordCount: string;
             wordCountP: string;
             wordCountW: string;
@@ -425,10 +572,48 @@ export default class Cherry extends CherryStatic {
             shortcutStatic18: string;
             leftMouseButton: string;
             disableShortcut: string;
+            enableShortcut: string;
             recoverShortcut: string;
             search: string;
             autoWrap: string;
             footnoteTitle: string;
+            searchFor: string;
+            replaceWith: string;
+            previousMatch: string;
+            nextMatch: string;
+            replace: string;
+            replaceAll: string;
+            regExpSearch: string;
+            caseSensitiveSearch: string;
+            wholeWordSearch: string;
+            matchesFoundText: string;
+            toggleReplace: string;
+            close: string;
+            border: string;
+            shadow: string;
+            radius: string;
+            customShortcut: string;
+            staticShortcut: string;
+            edit: string;
+            save: string;
+            cancel: string;
+            saveAsImage: string;
+            mapChartLoading: string;
+            mapChartLoadingTip: string;
+            mapChartError: string;
+            mapChartErrorTip: string;
+            mapChartRetry: string;
+            chartRenderError: string;
+            chartLibraryNotLoadedTip: string;
+            radarData: string;
+            scatterData: string;
+            pieData: string;
+            heatmapData: string;
+            mapData: string;
+            maxValue: string;
+            minValue: string;
+            high: string;
+            low: string;
         };
     };
     locale: any;
@@ -529,6 +714,7 @@ export default class Cherry extends CherryStatic {
      *  level: number;
      * id: string;
      * text: string;
+     * isInBlockquote: boolean;
      * }[]} HeaderList
      * 获取目录，目录由head1~6组成
      * @returns {HeaderList} 标题head数组
@@ -537,6 +723,7 @@ export default class Cherry extends CherryStatic {
         level: number;
         id: string;
         text: string;
+        isInBlockquote: boolean;
     }[];
     /**
      * 覆盖编辑区的内容
@@ -714,7 +901,7 @@ export default class Cherry extends CherryStatic {
      */
     clearFlowSessionCursor(): void;
 }
-export type CherryOptions = import('../../types/cherry').CherryOptions;
+export type CherryOptions = import('~types/cherry').CherryOptions;
 import { CherryStatic } from "./CherryStatic";
 import Event from "./Event";
 import Toc from "./toolbars/Toc";
